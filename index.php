@@ -14,9 +14,10 @@
                 <form class="d-flex" action="index.php" method="POST">
                     <input id="txtBuscador" class="form-control me-2" type="text" placeholder="Poliza"
                         aria-label="Search" name="buscador">
-                    <button class="btn btn-outline-secondary" type="button"> <img id="img1" src="lupa.ico" alt=""
+                    <button class="btn btn-outline-secondary" name="buscar" type="button"> <img id="img1" src="lupa.ico" alt=""
                             width="25" height="25" class="d-inline-block align-text-top" /></button>
                 </form>
+
             </div>
         </nav>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
@@ -106,13 +107,17 @@
                             <th scope="col">Sucursal</th>
                             <th scope="col">Tipo de Seguro</th>
                             <th scope="col">Paquete #</th>
+                            <th scope="col">SINIESTRO</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
+                            
                         </tr>
                     </thead>
                     <tbody>
                         
                         <?php
+
+                                
                                 //$buscar = $_POST['buscador'];
                                 $query = "SELECT
                                                 cliente.idCliente, 
@@ -152,6 +157,11 @@
                                         <td><?php echo $row['tipo_seguro'] ?></td>
                                         <td><?php echo $row['idSeguro'] ?></td>
                                         <td>
+                                            <a href="saveAccidente.php?id2=<?php echo $row['niv']; ?>" class="btn rounded-pill btn-outline-secondary" type="button">
+                                                <img id="img1" src="accidente.ico" alt="" width="25" height="25"
+                                                    class="d-inline-block align-text-top" /></a>
+                                        </td>
+                                        <td>
                                             <a  href="delete.php?id=<?php echo $row['idCliente']; ?>&id2=<?php echo $row['niv']; ?>" class="btn rounded-pill btn-outline-secondary" type="button">
                                                 <img id="img1" src="delete.ico" alt="" width="25" height="25"
                                                     class="d-inline-block align-text-top" /></a>
@@ -161,11 +171,11 @@
                                                 <img id="img1" src="editar.ico" alt="" width="25" height="25"
                                                     class="d-inline-block align-text-top" /></a>
                                         </td>
+                                        
                                     </tr>
                                 <?php } 
                                 mysqli_close($conn);?>
                                 
-                        ?>
                         
                     </tbody>
                 </table>
