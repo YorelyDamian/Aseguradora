@@ -15,7 +15,7 @@
                 
                     <input id="txtBuscador" class="form-control me-2" type="text" placeholder="Poliza"
                         aria-label="Search" name="buscador">
-                    <button class="btn btn-outline-secondary" type="button"> <img id="img1" src="lupa.ico" alt=""
+                    <button class="btn btn-outline-secondary" value="CDMX" name="sucursal" type="button"> <img id="img1" src="lupa.ico" alt=""
                             width="25" height="25" class="d-inline-block align-text-top" /></button>
                
         
@@ -178,7 +178,7 @@
                                         </tr>
                                     <?php } 
                                 } elseif(isset($_POST['buscar'])){
-                                    $direc = $_POST['buscador'];
+                                    $direc = $_POST['sucursal'];
                                     $query = "SELECT
                                                     cliente.idCliente, 
                                                     cliente.nombre, 
