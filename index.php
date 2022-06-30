@@ -83,7 +83,7 @@
                     </li>
                 </ul>
                 
-                    <button id="btnGuardar" class="btn btn-outline-success" type="submit">GUARDAR REGISTRO</button>
+                    <button id="btnGuardar" name="guardar" class="btn btn-outline-success" type="submit">GUARDAR REGISTRO</button>
                
             </div>
             </form>
@@ -117,32 +117,59 @@
                         
                         <?php
 
-                                
-                                //$buscar = $_POST['buscador'];
-                                $query = "SELECT
-                                                cliente.idCliente, 
-                                                cliente.nombre, 
-                                                cliente.apellido, 
-                                                autos.Marca, 
-                                                autos.niv, 
-                                                cliente.noTelefono, 
-                                                seguro.nombreSeg, 
-                                                seguro.direccion, 
-                                                seguro.tipo_seguro, 
-                                                seguro.idSeguro
-                                            FROM
-                                                autos
-                                                INNER JOIN
-                                                cliente
-                                                ON 
-                                                    autos.propietario = cliente.nombre
-                                                INNER JOIN
-                                                seguro
-                                                ON 
-                                                    cliente.idSeguro = seguro.idSeguro
-                                                ";
-                                //WHERE cliente.nombre = '$buscar'
-                                $result = mysqli_query($conn,$query);
+                                if(isset($_POST['guardar'])) {
+                                    //$buscar = $_POST['buscador'];
+                                    $query = "SELECT
+                                                    cliente.idCliente, 
+                                                    cliente.nombre, 
+                                                    cliente.apellido, 
+                                                    autos.Marca, 
+                                                    autos.niv, 
+                                                    cliente.noTelefono, 
+                                                    seguro.nombreSeg, 
+                                                    seguro.direccion, 
+                                                    seguro.tipo_seguro, 
+                                                    seguro.idSeguro
+                                                FROM
+                                                    autos
+                                                    INNER JOIN
+                                                    cliente
+                                                    ON 
+                                                        autos.propietario = cliente.nombre
+                                                    INNER JOIN
+                                                    seguro
+                                                    ON 
+                                                        cliente.idSeguro = seguro.idSeguro
+                                                    ";
+                                    //WHERE cliente.nombre = '$buscar'
+                                    $result = mysqli_query($conn,$query);
+                                } elseif(isset($_POST['buscar'])){
+                                    $direc = $_POST['buscador'];
+                                    $query = "SELECT
+                                                    cliente.idCliente, 
+                                                    cliente.nombre, 
+                                                    cliente.apellido, 
+                                                    autos.Marca, 
+                                                    autos.niv, 
+                                                    cliente.noTelefono, 
+                                                    seguro.nombreSeg, 
+                                                    seguro.direccion, 
+                                                    seguro.tipo_seguro, 
+                                                    seguro.idSeguro
+                                                FROM
+                                                    autos
+                                                    INNER JOIN
+                                                    cliente
+                                                    ON 
+                                                        autos.propietario = cliente.nombre
+                                                    INNER JOIN
+                                                    seguro
+                                                    ON 
+                                                        cliente.idSeguro = seguro.idSeguro
+                                                    WHERE seguro.direccion = '$direc'";
+                                    //WHERE cliente.nombre = '$buscar'
+                                    $result = mysqli_query($conn,$query);
+                                }
 
                                 while($row = mysqli_fetch_assoc($result)){ ?>
                                     <tr>
