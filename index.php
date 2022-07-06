@@ -8,20 +8,21 @@
             <img src="auto.ico" alt="" width="30" height="24" class="d-inline-block align-text-top">
             ASEGURADORA
         </a>
-        <form class="d-flex" action="tabla.php" method="POST"  name="buscar">
+        
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
                 
-                
+                <form class="d-flex" action="" method="get">
                     <input id="txtBuscador" class="form-control me-2" type="text" placeholder="Poliza"
-                        aria-label="Search" name="buscador">
-                    <button class="btn btn-outline-secondary" name="btnsuc" value="CDMX" type="button"> <img id="img1" src="lupa.ico" alt=""
-                            width="25" height="25" class="d-inline-block align-text-top" /></button>
-               
+                        aria-label="Search" name="busqueda"> 
+                    <input type="submit" class="btn btn-outline-secondary" name="enviar" value="buscar" type="button"> <img id="img1" src="lupa.ico" alt=""
+                        width="25" height="25" class="d-inline-block align-text-top" /></input>
+
+                </form>
         
             </div>
         </nav>
-        </form>
+        
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
             aria-controls="offcanvasNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -116,131 +117,68 @@
                             
                         </tr>
                     </thead>
-                    <tbody>
-                        
-                    <?php   ?>
-                        <?php
-   
-                            if(isset($_POST['buscar'])) {
-                                
-                                //$buscar = $_POST['buscador'];
-                                $query = "SELECT
-                                                cliente.idCliente, 
-                                                cliente.nombre, 
-                                                cliente.apellido, 
-                                                autos.Marca, 
-                                                autos.niv, 
-                                                cliente.noTelefono, 
-                                                seguro.nombreSeg, 
-                                                seguro.direccion, 
-                                                seguro.tipo_seguro, 
-                                                seguro.idSeguro
-                                            FROM
-                                                autos
-                                                INNER JOIN
-                                                cliente
-                                                ON 
-                                                    autos.propietario = cliente.nombre
-                                                INNER JOIN
-                                                seguro
-                                                ON 
-                                                    cliente.idSeguro = seguro.idSeguro
-                                                    WHERE seguro.direccion = '$buscarSuc'
-                                                ";
-                                //WHERE cliente.nombre = '$buscar'
-                                $result = mysqli_query($conn,$query);
-                                while($row = mysqli_fetch_assoc($result)){ ?>
-                                    <tr>
-                                        <td><?php echo $row['idCliente'] ?></td>
-                                        <td><?php echo $row['nombre'] ?></td>
-                                        <td><?php echo $row['apellido'] ?></td>
-                                        <td><?php echo $row['Marca'] ?></td>
-                                        <td><?php echo $row['niv'] ?></td>
-                                        <td><?php echo $row['noTelefono'] ?></td>
-                                        <td><?php echo $row['nombreSeg'] ?></td>
-                                        <td><?php echo $row['direccion'] ?></td>
-                                        <td><?php echo $row['tipo_seguro'] ?></td>
-                                        <td><?php echo $row['idSeguro'] ?></td>
-                                        <td>
-                                            <a href="saveAccidente.php?id2=<?php echo $row['niv']; ?>" class="btn rounded-pill btn-outline-secondary" type="button">
-                                                <img id="img1" src="accidente.ico" alt="" width="25" height="25"
-                                                    class="d-inline-block align-text-top" /></a>
-                                        </td>
-                                        <td>
-                                            <a  href="delete.php?id=<?php echo $row['idCliente']; ?>&id2=<?php echo $row['niv']; ?>" class="btn rounded-pill btn-outline-secondary" type="button">
-                                                <img id="img1" src="delete.ico" alt="" width="25" height="25"
-                                                    class="d-inline-block align-text-top" /></a>
-                                        </td>
-                                        <td>
-                                            <a href="edit.php?id=<?php echo $row['nombre']; ?>&id2=<?php echo $row['niv']; ?>&id3=<?php echo $row['idCliente']; ?>" class="btn rounded-pill btn-outline-secondary" type="button">
-                                                <img id="img1" src="editar.ico" alt="" width="25" height="25"
-                                                    class="d-inline-block align-text-top" /></a>
-                                        </td>
-                                        
-                                    </tr>
-                                <?php } 
+                    <tbody>                      
+                    <?php
+                            if(isset($_GET['enviar'])){
+                            $busqueda = $_GET['busqueda'];
+                            $query = "SELECT
+                                            cliente.idCliente, 
+                                            cliente.nombre, 
+                                            cliente.apellido, 
+                                            autos.Marca, 
+                                            autos.niv, 
+                                            cliente.noTelefono, 
+                                            seguro.nombreSeg, 
+                                            seguro.direccion, 
+                                            seguro.tipo_seguro, 
+                                            seguro.idSeguro
+                                        FROM
+                                            autos
+                                            INNER JOIN
+                                            cliente
+                                            ON 
+                                                autos.propietario = cliente.nombre
+                                            INNER JOIN
+                                            seguro
+                                            ON 
+                                                cliente.idSeguro = seguro.idSeguro
+                                            WHERE seguro.direccion LIKE '%$busqueda%'
+                                            ";
                             }
-                                
-                                $query = "SELECT
-                                                    cliente.idCliente, 
-                                                    cliente.nombre, 
-                                                    cliente.apellido, 
-                                                    autos.Marca, 
-                                                    autos.niv, 
-                                                    cliente.noTelefono, 
-                                                    seguro.nombreSeg, 
-                                                    seguro.direccion, 
-                                                    seguro.tipo_seguro, 
-                                                    seguro.idSeguro
-                                                FROM
-                                                    autos
-                                                    INNER JOIN
-                                                    cliente
-                                                    ON 
-                                                        autos.propietario = cliente.nombre
-                                                    INNER JOIN
-                                                    seguro
-                                                    ON 
-                                                        cliente.idSeguro = seguro.idSeguro
-                                                   
-                                                    ";
-                                    //WHERE cliente.nombre = '$buscar'
-                                    $result = mysqli_query($conn,$query);
-                                    while($row = mysqli_fetch_assoc($result)){ ?>
-                                        <tr>
-                                            <td><?php echo $row['idCliente'] ?></td>
-                                            <td><?php echo $row['nombre'] ?></td>
-                                            <td><?php echo $row['apellido'] ?></td>
-                                            <td><?php echo $row['Marca'] ?></td>
-                                            <td><?php echo $row['niv'] ?></td>
-                                            <td><?php echo $row['noTelefono'] ?></td>
-                                            <td><?php echo $row['nombreSeg'] ?></td>
-                                            <td><?php echo $row['direccion'] ?></td>
-                                            <td><?php echo $row['tipo_seguro'] ?></td>
-                                            <td><?php echo $row['idSeguro'] ?></td>
-                                            <td>
-                                                <a href="saveAccidente.php?id2=<?php echo $row['niv']; ?>" class="btn rounded-pill btn-outline-secondary" type="button">
-                                                    <img id="img1" src="accidente.ico" alt="" width="25" height="25"
-                                                        class="d-inline-block align-text-top" /></a>
-                                            </td>
-                                            <td>
-                                                <a  href="delete.php?id=<?php echo $row['idCliente']; ?>&id2=<?php echo $row['niv']; ?>" class="btn rounded-pill btn-outline-secondary" type="button">
-                                                    <img id="img1" src="delete.ico" alt="" width="25" height="25"
-                                                        class="d-inline-block align-text-top" /></a>
-                                            </td>
-                                            <td>
-                                                <a href="edit.php?id=<?php echo $row['nombre']; ?>&id2=<?php echo $row['niv']; ?>&id3=<?php echo $row['idCliente']; ?>" class="btn rounded-pill btn-outline-secondary" type="button">
-                                                    <img id="img1" src="editar.ico" alt="" width="25" height="25"
-                                                        class="d-inline-block align-text-top" /></a>
-                                            </td>
-                                            
-                                        </tr>
-                                    <?php }
-
-                                
-                                mysqli_close($conn);?>
-                                
-                        
+                            //WHERE cliente.nombre = '$buscar'
+                            $result = mysqli_query($conn,$query);
+                            while($row = mysqli_fetch_assoc($result)){ ?>
+                                <tr>
+                                    <td><?php echo $row['idCliente'] ?></td>
+                                    <td><?php echo $row['nombre'] ?></td>
+                                    <td><?php echo $row['apellido'] ?></td>
+                                    <td><?php echo $row['Marca'] ?></td>
+                                    <td><?php echo $row['niv'] ?></td>
+                                    <td><?php echo $row['noTelefono'] ?></td>
+                                    <td><?php echo $row['nombreSeg'] ?></td>
+                                    <td><?php echo $row['direccion'] ?></td>
+                                    <td><?php echo $row['tipo_seguro'] ?></td>
+                                    <td><?php echo $row['idSeguro'] ?></td>
+                                    <td>
+                                        <a href="saveAccidente.php?id2=<?php echo $row['niv']; ?>" class="btn rounded-pill btn-outline-secondary" type="button">
+                                            <img id="img1" src="accidente.ico" alt="" width="25" height="25"
+                                                class="d-inline-block align-text-top" /></a>
+                                    </td>
+                                    <td>
+                                        <a  href="delete.php?id=<?php echo $row['idCliente']; ?>&id2=<?php echo $row['niv']; ?>" class="btn rounded-pill btn-outline-secondary" type="button">
+                                            <img id="img1" src="delete.ico" alt="" width="25" height="25"
+                                                class="d-inline-block align-text-top" /></a>
+                                    </td>
+                                    <td>
+                                        <a href="edit.php?id=<?php echo $row['nombre']; ?>&id2=<?php echo $row['niv']; ?>&id3=<?php echo $row['idCliente']; ?>" class="btn rounded-pill btn-outline-secondary" type="button">
+                                            <img id="img1" src="editar.ico" alt="" width="25" height="25"
+                                                class="d-inline-block align-text-top" /></a>
+                                    </td>
+                                    
+                                </tr>
+                            
+                            <?php } 
+                                mysqli_close($conn);?>   
                     </tbody>
                 </table>
             </div>
