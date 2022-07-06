@@ -6,17 +6,17 @@
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
             <img src="auto.ico" alt="" width="30" height="24" class="d-inline-block align-text-top">
-            ASEGURADORA
+            ASEGURADORA "TOBY" CDMX
         </a>
         
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
                 
                 <form class="d-flex" action="" method="get">
-                    <input id="txtBuscador" class="form-control me-2" type="text" placeholder="Poliza"
+                    <input id="txtBuscador" class="form-control me-2" type="text" placeholder="Sucursal"
                         aria-label="Search" name="busqueda"> 
-                    <input type="submit" class="btn btn-outline-secondary" name="enviar" value="buscar" type="button"> <img id="img1" src="lupa.ico" alt=""
-                        width="25" height="25" class="d-inline-block align-text-top" /></input>
+                    <button type="submit" class="btn btn-outline-secondary" name="enviar" value="buscar" type="button"> <img id="img1" src="lupa.ico" alt=""
+                        width="25" height="25" class="d-inline-block align-text-top" /></button>
 
                 </form>
         
@@ -62,14 +62,11 @@
                 </ul>
                 <ul id="datoAuto" class="navbar-nav justify-content-end flex-grow-1 pe-3">
                     <li class="nav-item">
-                        <label for="exampleFormControlInput1" class="form-label">SEGURO</label>
+                        <label for="exampleFormControlInput1" class="form-label">SUCURSAL</label>
                         <div class="group-vertical">
                             <input type="radio" id="radio1" style="margin: 10px" name="oficina" value="CDMX" ><label id="radio2">
                                 CDMX</label>
-                            <input type="radio" id="radio1" style="margin: 10px" name="oficina" value="QUERETARO" ><label id="radio2">
-                                QUERETARO</label>
-                            <input type="radio" id="radio1" style="margin: 10px" name="oficina" value="MONTERREY" ><label id="radio2">
-                                MONTERREY</label>
+                            
                         </div>
                     </li>
                 </ul>
@@ -119,6 +116,8 @@
                     </thead>
                     <tbody>                      
                     <?php
+                    
+
                             if(isset($_GET['enviar'])){
                             $busqueda = $_GET['busqueda'];
                             $query = "SELECT
@@ -144,7 +143,33 @@
                                                 cliente.idSeguro = seguro.idSeguro
                                             WHERE seguro.direccion LIKE '%$busqueda%'
                                             ";
+                            }else{
+                                $query = "SELECT
+                                            cliente.idCliente, 
+                                            cliente.nombre, 
+                                            cliente.apellido, 
+                                            autos.Marca, 
+                                            autos.niv, 
+                                            cliente.noTelefono, 
+                                            seguro.nombreSeg, 
+                                            seguro.direccion, 
+                                            seguro.tipo_seguro, 
+                                            seguro.idSeguro
+                                        FROM
+                                            autos
+                                            INNER JOIN
+                                            cliente
+                                            ON 
+                                                autos.propietario = cliente.nombre
+                                            INNER JOIN
+                                            seguro
+                                            ON 
+                                                cliente.idSeguro = seguro.idSeguro
+                                            WHERE seguro.direccion = 'CDMX'
+                                            ";
                             }
+                            
+
                             //WHERE cliente.nombre = '$buscar'
                             $result = mysqli_query($conn,$query);
                             while($row = mysqli_fetch_assoc($result)){ ?>
